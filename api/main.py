@@ -22,8 +22,10 @@ def home():
 
     source_url = request.form.get('url')
     dimensions = request.form.get('dimensions', "1280x1024").split('x')
+    wait = request.form.get('wait', 5)
     if source_url:
-        filepath = save_screenshot(source_url, dimensions[0], dimensions[1])
+        filepath = save_screenshot(source_url, dimensions[0], dimensions[1],
+                                   wait=wait)
         return send_file(filepath, mimetype='image/png')
 
     return jsonify({
