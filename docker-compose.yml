@@ -1,0 +1,10 @@
+version: "2"
+services:
+
+  webkit2png:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: advancedthreatanalytics/webkit2png
+    ports:
+      - 8080:8080
