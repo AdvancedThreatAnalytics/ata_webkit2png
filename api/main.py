@@ -2,7 +2,7 @@ import hashlib
 import os
 import subprocess
 
-from flask import Flask, jsonify, request, send_file
+from flask import Flask, jsonify, request, send_file, after_this_request
 
 app = Flask(__name__)
 
@@ -16,16 +16,18 @@ def ping():
 
 @app.route("/", methods=['POST'])
 def home():
-    # Before each request cleanup the previous saved images
-    for f in os.listdir(TEMP_PATH):
-        os.unlink('/'.join([TEMP_PATH, f]))
-
     source_url = request.form.get('url')
     dimensions = request.form.get('dimensions', "1280x1024").split('x')
     wait = request.form.get('wait', 5)
     if source_url:
         filepath = save_screenshot(source_url, dimensions[0], dimensions[1],
                                    wait=wait)
+
+        # Cleanup image after each request
+        @after_this_request
+        def unlink_temp_file(response):
+            os.unlink(filepath)
+            return response
         return send_file(filepath, mimetype='image/png')
 
     return jsonify({
