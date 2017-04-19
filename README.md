@@ -16,9 +16,9 @@ import requests
 
 url = 'http://localhost:8080/'
 data = {
-  "url": "source_url", # URL to the html to be converted
-  "dimensions": "800x600", # Dimensions of the screenshot, format: "widthxheight", default is 1280x1024
-  "wait": "5" # Wait before taking screenshot, format: Number in seconds, default is 5 seconds
+  'url': 'source_url', # URL to the html to be converted
+  'dimensions': '800x600', # Dimensions of the screenshot, format: 'widthxheight', default is 1280x1024
+  'wait': '5' # Wait before taking screenshot, format: Number in seconds, default is 5 seconds
 }
 
 resp = requests.post(url=url, json=data)
