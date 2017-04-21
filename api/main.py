@@ -16,12 +16,15 @@ def ping():
 
 @app.route("/", methods=['POST'])
 def home():
-    source_url = request.form.get('url')
-    dimensions = request.form.get('dimensions', "1280x1024").split('x')
-    wait = request.form.get('wait', 5)
+    data = request.get_json()
+    source_url = data.get('url')
+    dimensions = data.get('dimensions', "1280x1024").split('x')
+    wait = data.get('wait', 5)
+
     if source_url:
-        filepath = save_screenshot(source_url, dimensions[0], dimensions[1],
-                                   wait=wait)
+        filepath = save_screenshot(
+            source_url, dimensions[0], dimensions[1],
+            wait=wait)
 
         # Cleanup image after each request
         @after_this_request
@@ -54,6 +57,7 @@ def save_screenshot(url, width, height, wait=5):
     subprocess.call(command)
 
     return filepath
+
 
 if __name__ == '__main__':
     app.run()
