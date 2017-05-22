@@ -1,0 +1,4 @@
+webkit2png
+gunicorn
+flask
+supervisor
