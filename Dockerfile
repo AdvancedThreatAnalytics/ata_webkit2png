@@ -19,6 +19,7 @@ RUN apt-get update && \
 RUN git clone git://github.com/adamn/python-webkit2png.git
 
 WORKDIR python-webkit2png
+RUN python setup.py install		
 
 RUN mkdir -p /tmp/images
 RUN mkdir -p /opt/app
